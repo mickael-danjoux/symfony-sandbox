@@ -80,6 +80,11 @@ sf-stop: ## Stop containers and server.
 	$(SYMFONY_SERVER_STOP)
 .PHONY: sf-stop
 
+sf-restart: ## Restart server.
+	$(SYMFONY_SERVER_STOP); \
+	$(SYMFONY_SERVER_START)
+.PHONY: sf-stop
+
 sf-log: ## Show symfony logs.
 	$(SYMFONY) server:log
 .PHONY: sf-log

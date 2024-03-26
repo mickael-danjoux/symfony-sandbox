@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TwigComponentController!{% endblock %}
+    {% block flashes %}
+    {% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12 mb-3">
+            <h1 class="mb-5">Twig components (Alert example)</h1>
+            <p>
+                This is an example of <b>Twig component</b>. <br>
+                <a target="_blank" href="https://symfony.com/bundles/ux-twig-component/current/index.html">Symfony doc</a>
+            </p>
+            <ul>
+                <li>Logic is in <code>/src/Twig/Components</code></li>
+                <li>Template is in <code>/templates/components</code></li>
+            </ul>
+        </div>
+        <div class="col-12">
+            <h2>Create Twig Component</h2>
+            <p>
+                Twig component is a simple PHP class with attributs and methods. <br>
+                Then, it’s easy to use:<br> <code>&lt;twig:Alert type="danger" message="My message"/&gt</code> . <br>
+            </p>
+            <twig:Alert type="danger">
+                Message test
+            </twig:Alert>
+            <p>
+                It’s possible to add many props<br>
+                <code>&lt;twig:Alert type="info" message="My message" withoutCloseButton /&gt</code>
+            </p>
+            <twig:Alert type="info" withoutCloseButton>
+                Message test
+            </twig:Alert>
+            <h2>Nested component</h2>
+            <p>
+                We already can use nested component like for <code>Session flashes</code> that using <code>Alert</code> twig component <br>
+                <code>&lt;twig:Flashes /&gt</code>
+            </p>
+            <twig:Flashes />
+        </div>
+    </div>
+{% endblock %}
