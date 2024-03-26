@@ -2,9 +2,6 @@
 #---DOCKER---#
 DOCKER = docker
 DOCKER_RUN = $(DOCKER) run
-DOCKER_COMPOSE = docker compose
-DOCKER_COMPOSE_UP = $(DOCKER_COMPOSE) up -d
-DOCKER_COMPOSE_DOWN = $(DOCKER_COMPOSE) down
 #------------#
 
 #---SYMFONY--#
@@ -17,7 +14,6 @@ SYMFONY_CONSOLE = $(SYMFONY) console
 #---COMPOSER-#
 COMPOSER = composer
 COMPOSER_INSTALL = $(COMPOSER) install
-COMPOSER_UPDATE = $(COMPOSER) update
 #------------#
 
 #---PHPQA---#
@@ -33,16 +29,6 @@ help: ## Show this help.
 	@echo ""
 	@echo "Targets:"
 	@grep -E '(^[a-zA-Z0-9_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
-#---------------------------------------------#
-
-## === 🐋  DOCKER ================================================
-docker-up: ## Start docker containers.
-	$(DOCKER_COMPOSE_UP)
-.PHONY: docker-up
-
-docker-stop: ## Stop docker containers.
-	$(DOCKER_COMPOSE_STOP)
-.PHONY: docker-stop
 #---------------------------------------------#
 
 ## === 🎛️  SYMFONY ===============================================
@@ -64,30 +50,34 @@ sf-dmm: ## Migrate.
 .PHONY: sf-dmm
 
 sf-install-dev: ## Install project in dev mode.
-	$(DOCKER_COMPOSE_UP); \
+	$(COMPOSER_INSTALL); \
+	$(SYMFONY_SERVER_START); \
 	$(MAKE) sf-ddc; \
-	$(MAKE) sf-dmm; \
-	$(SYMFONY_SERVER_START)
+	$(MAKE) sf-dmm
 .PHONY: sf-install-dev
 
 sf-start: ## Start containers and server.
-	$(DOCKER_COMPOSE_UP); \
 	$(SYMFONY_SERVER_START)
 .PHONY: sf-start
 
-sf-stop: ## Stop containers and server.
-	$(DOCKER_COMPOSE_DOWN); \
+sf-stop: ## Stop server and containers.
 	$(SYMFONY_SERVER_STOP)
-.PHONY: sf-stop
+.PHONY: sf-restart
 
 sf-restart: ## Restart server.
 	$(SYMFONY_SERVER_STOP); \
 	$(SYMFONY_SERVER_START)
-.PHONY: sf-stop
+.PHONY: sf-restart
 
 sf-log: ## Show symfony logs.
 	$(SYMFONY) server:log
 .PHONY: sf-log
+
+sf-build: ## Build assets.
+	$(SYMFONY_CONSOLE) sass:build; \
+	$(SYMFONY_CONSOLE) asset-map:compile
+.PHONY: sf-build
+
 #---------------------------------------------#
 
 ## === 🐛  PHPQA =================================================
