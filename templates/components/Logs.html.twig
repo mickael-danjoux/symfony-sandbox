@@ -1,0 +1,22 @@
+<div class="row" {{ attributes }}>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="card-footer">
+                <button
+                        class="btn btn-danger"
+                        data-action="live#action"
+                        data-live-action-param="clear"
+                >
+                    Clear
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

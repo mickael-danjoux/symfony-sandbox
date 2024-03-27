@@ -1,0 +1,32 @@
+<div class="row" {{ attributes }} >
+    <div class="col-12 col-md-6 d-flex flex-column">
+        <span> Generating a number between 0 and {{ max }}</span>
+        <label>
+            <input type="number" data-model="max" class="form-control">
+        </label>
+        <strong>{{ number }}</strong>
+    </div>
+    <div class="col-12 col-md-6 d-flex flex-column">
+        <button
+                class="btn btn-info my-2"
+                data-action="live#action"
+                data-live-action-param="getNewNumber"
+        >Generate Number
+        </button>
+        <button
+                class="btn btn-info my-2"
+                data-action="live#action"
+                data-live-action-param="resetMax"
+        >Reset max to 1000
+        </button>
+        
+        <button
+                class="btn btn-secondary my-2"
+                data-action="live#emit"
+                data-live-event-param="addLogEvent"
+                data-live-message-param="Log comes from button"
+        >Event to log from number
+        </button>
+    
+    </div>
+</div>

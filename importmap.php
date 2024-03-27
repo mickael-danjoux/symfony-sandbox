@@ -31,4 +31,7 @@ return [
     'bootstrap/dist/js/bootstrap.bundle.min.js' => [
         'version' => '5.3.3',
     ],
+    '@symfony/ux-live-component' => [
+        'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
+    ],
 ];
