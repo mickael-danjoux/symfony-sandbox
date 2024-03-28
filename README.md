@@ -2,6 +2,12 @@
 
 This project is a sandbox for testing features in symfony project and some smalls POC.
 
+# Content
+
+- Twig component
+- Live component (simple example)
+- Form with live component (with Entity Collection)
+
 # Install
 
 A Makefile make your life easier 😉
