@@ -1,5 +1,5 @@
 workers:
-
+  messenger_consume_async: ~
   # Auto start Sass serveur
   sass:
     cmd: ['symfony', 'console', 'sass:build', '--watch']

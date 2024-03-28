@@ -2,13 +2,19 @@
 
 This project is a sandbox for testing features in symfony project and some smalls POC.
 
-# Content
+## Content
 
+### Configuration
+- Docker
+- Makefile
+
+### Symfony experiments
+- Messenger Component (Async emails and actions)
 - Twig component
 - Live component (simple example)
 - Form with live component (with Entity Collection)
 
-# Install
+## Install
 
 A Makefile make your life easier 😉
 

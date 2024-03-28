@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AsyncController!{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-around">
+        <div class="col-12 col-md-6 col-lg-4  mb-5">
+            <h2>Symfony Mailer</h2>
+            {{ form_start(form) }}
+            {{ form_rest(form) }}
+            <button class="btn btn-primary">Send asynchronous email</button>
+            {{ form_end(form) }}
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <h2>Custom dispatch</h2>
+            <div class="d-flex flex-column">
+                <a href="{{ path('app_async_long_action') }}" class="btn btn-secondary mb-1" id="btnLongAction">Simulate
+                    long
+                    action</a>
+                <a href="{{ path('app_async_long_action_async') }}" class="btn btn-success mb-1">Simulate async long
+                    action</a>
+                <a href="{{ path('app_async_long_action_async',{error: true}) }}" class="btn btn-danger mb-1">Simulate
+                    async long
+                    action error</a>
+                <span>(Error will trigger retries, wait a moment before refreshing page and see it in the table (>30s)</span>
+            </div>
+        </div>
+        <div class="col-12">
+            <h2>Failed messages queue</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#id</th>
+                    <th scope="col">Event</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for message in failedMessages %}
+                    <tr>
+                        <th scope="row">{{ message.id }}</th>
+                        <td>{{ message.title }}</td>
+                        <td>
+                            <a href="{{ path('app_async_retry_message',{id: message.id}) }}" class="me-2">Retry</a>
+                            <a href="{{ path('app_async_remove_message',{id: message.id}) }}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+      window.onload = (event) => {
+        document.getElementById('btnLongAction').addEventListener('click', (ev) => {
+          console.log('clicked');
+          ev.target.classList.add('disabled');
+        });
+      };
+    </script>
+{% endblock %}
+
