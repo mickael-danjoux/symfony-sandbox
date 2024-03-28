@@ -3,6 +3,3 @@ workers:
   # Auto start Sass serveur
   sass:
     cmd: ['symfony', 'console', 'sass:build', '--watch']
-
-  # Auto start Docker
-  docker_compose: ~

@@ -2,6 +2,9 @@
 #---DOCKER---#
 DOCKER = docker
 DOCKER_RUN = $(DOCKER) run
+DOCKER_COMPOSE = $(DOCKER) compose
+DOCKER_COMPOSE_UP = $(DOCKER_COMPOSE) up -d
+DOCKER_COMPOSE_DOWN = $(DOCKER_COMPOSE) down
 #------------#
 
 #---SYMFONY--#
@@ -49,19 +52,27 @@ sf-dmm: ## Migrate.
 	$(SYMFONY_CONSOLE) doctrine:migrations:migrate --no-interaction
 .PHONY: sf-dmm
 
+sf-dfl: ## Load Fixtures.
+	$(SYMFONY_CONSOLE) doctrine:fixtures:load --no-interaction
+.PHONY: sf-dfl
+
 sf-install-dev: ## Install project in dev mode.
+	$(DOCKER_COMPOSE_UP); \
 	$(COMPOSER_INSTALL); \
 	$(SYMFONY_SERVER_START); \
 	$(MAKE) sf-ddc; \
-	$(MAKE) sf-dmm
+	$(MAKE) sf-dmm; \
+	$(MAKE) sf-dfl
 .PHONY: sf-install-dev
 
 sf-start: ## Start containers and server.
+	$(DOCKER_COMPOSE_UP); \
 	$(SYMFONY_SERVER_START)
 .PHONY: sf-start
 
 sf-stop: ## Stop server and containers.
-	$(SYMFONY_SERVER_STOP)
+	$(SYMFONY_SERVER_STOP); \
+	$(DOCKER_COMPOSE_DOWN)
 .PHONY: sf-restart
 
 sf-restart: ## Restart server.

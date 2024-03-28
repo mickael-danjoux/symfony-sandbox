@@ -1,0 +1,100 @@
+<div {{ attributes }} class="card">
+    <div class="card-body p-4">
+        {{ form_start(form) }}
+        <div class="row justify-content-center">
+            <div class="col-8 col-lg-6">
+                {{ form_errors(form) }}
+            </div>
+        </div>
+        <div class="row justify-content-center">
+           
+            <div class="col-8 col-lg-4">
+                {{ form_row(form.lastName) }}
+            </div>
+            <div class="col-8 col-lg-4">
+                {{ form_row(form.firstName) }}
+            </div>
+            <div class="col-8">
+                {{ form_row(form.email) }}
+                <div class="card">
+                    <div class="card-header">
+                        Invoice items
+                    </div>
+                    <div class="card-body p-4">
+                        {{ form_errors(form.invoiceLines) }}
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th style="width: 100px;">Price</th>
+                                <th style="width: 100px;">Quantity</th>
+                                <th style="width: 100px;">&nbsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for key, line in form.invoiceLines %}
+                                <tr>
+                                    <td>
+                                        {{ form_row(line.product, {
+                                            label: false,
+                                        }) }}
+                                    </td>
+                                    <td>{{ (line.vars.value.product.price ?? 0) |format_currency('EUR', locale='fr') }}</td>
+                                    <td>
+                                        {{ form_row(line.quantity, {
+                                            label: false,
+                                            type: 'number',
+                                        }) }}
+                                    </td>
+                                    <td>
+                                        {{ form_row(line.vars.button_delete, {label: 'X', attr: {class: 'btn btn-outline-danger'}}) }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {{ form_widget(form.invoiceLines.vars.button_add, {label: '+ Add Item', attr: {class: 'btn btn-outline-primary'}}) }}
+                    </div>
+                </div>
+                
+                
+                <div class="col-4 offset-8 mt-4">
+                    <table class="table text-end">
+                        <tbody>
+                        <tr>
+                            <th>Subtotal:</th>
+                            <td>{{ this.subTotal|format_currency('EUR', locale='fr') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tax rate:</th>
+                            <td class="d-flex justify-content-end">
+                                <div class="input-group mb-3">
+                                    {{ form_widget(form.taxRate) }}
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Total:</th>
+                            <td>{{ this.total|format_currency('EUR', locale='fr') }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            
+            </div>
+            
+            <div class="col-12 mx-auto justify-content-center d-flex">
+                <button class="btn btn-dark"
+                        data-action="live#action"
+                        data-live-action-param="submit"
+                >
+                    Save invoice
+                </button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    
+    </div>
+
+</div>

@@ -1,4 +1,29 @@
 @import '../../vendor/twbs/bootstrap/scss/bootstrap';
+
 body {
-    background-color: #dce8fd;
+  background-color: #dce8fd;
+}
+
+h1 {
+  font-size: 52px;
+  font-weight: 700;
+}
+
+.shadow-blur {
+  position: relative
+}
+
+.shadow-blur:after {
+  position: absolute;
+  content: "";
+  z-index: -1;
+  background: var(--gradient);
+  inset: 3rem;
+  border-radius: 3rem;
+  bottom: var(--shadow-bottom, 0);
+  filter: blur(3rem)
+}
+
+.shadow-blur--rainbow {
+  --gradient: linear-gradient(113.84deg, #D65831 0%, #D2D631 36.52%, #31D673 71.83%, #3aa3ff 100%);
 }
