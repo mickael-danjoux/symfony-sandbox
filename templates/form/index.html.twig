@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormController!{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-4 shadow-blur shadow-blur--rainbow mb-5">
+            <h3>Form using autocomplete</h3>
+            <div class="card p-4">
+                {{ form(searchCustomerForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

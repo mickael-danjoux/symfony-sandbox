@@ -73,7 +73,7 @@ sf-start: ## Start containers and server.
 sf-stop: ## Stop server and containers.
 	$(SYMFONY_SERVER_STOP); \
 	$(DOCKER_COMPOSE_DOWN)
-.PHONY: sf-restart
+.PHONY: sf-stop
 
 sf-restart: ## Restart server.
 	$(SYMFONY_SERVER_STOP); \
